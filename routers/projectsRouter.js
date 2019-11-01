@@ -1,6 +1,6 @@
 const express = require("express");
 const projectsModel = require("../data/helpers/projectModel");
-const project = express();
+const project = express.Router();
 
 project.get("/", (req, res) => {
   projectsModel
