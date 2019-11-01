@@ -12,3 +12,5 @@ project.get('/', (req, res) => {
         message: 'An error occurred while fetching from database'
     }))
 })
+
+module.exports = project;
