@@ -14,7 +14,7 @@ project.get('/', (req, res) => {
 })
 
 project.get('/:id', projectIdValidator, (req, res) => {
-    res.status(200).json(res.valProject)
+    res.status(200).json(req.valProject)
 })
 
 project.post('/', projectBodyValidator, (req, res) => {
@@ -28,12 +28,25 @@ project.post('/', projectBodyValidator, (req, res) => {
     }))
 })
 
+project.delete('/:id', projectIdValidator, (req, res) => {
+    projectsModel.remove(req.valProject.id)
+    .then(flag => {
+        if (flag) {
+            res.status(201).json({
+                error: false,
+                message: "Deleted successfully",
+                data: req.valProject
+            })
+        }
+    })
+})
+
 function projectIdValidator(req, res, next) {
     const { id } = req.params;
     projectsModel.get(id)
     .then(project => {
         if (project) {
-            res.valProject = project;
+            req.valProject = project;
             next();
         } else res.status(404).json({
             err: true,
