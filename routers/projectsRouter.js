@@ -66,6 +66,21 @@ project.put("/:id", [projectIdValidator, projectBodyValidator], (req, res) => {
     );
 });
 
+project.get('/:id/actions', projectIdValidator, (req, res) => {
+    projectsModel.getProjectActions(req.valProject.id)
+    .then(actions => res.status(200).json({
+        error: false,
+        message: 'Fetched Successfully',
+        data: actions
+    }))
+    .catch(err =>
+        res.status(500).json({
+          error: true,
+          message: err.message
+        })
+      );
+})
+
 function projectIdValidator(req, res, next) {
   const { id } = req.params;
   projectsModel
