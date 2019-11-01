@@ -13,6 +13,10 @@ project.get('/', (req, res) => {
     }))
 })
 
+project.get('/:id', projectIdValidator, (req, res) => {
+    res.status(200).json(res.valProject)
+})
+
 function projectIdValidator(req, res, next) {
     const { id } = req.params;
     projectsModel.get(id)
