@@ -17,6 +17,17 @@ project.get('/:id', projectIdValidator, (req, res) => {
     res.status(200).json(res.valProject)
 })
 
+project.post('/', projectBodyValidator, (req, res) => {
+    projectsModel.insert(req.valProject)
+    .then(insertedProject => {
+        res.status(200).json(insertedProject)
+    })
+    .catch(err => res.status(500).json({
+        error: true,
+        message: err.message
+    }))
+})
+
 function projectIdValidator(req, res, next) {
     const { id } = req.params;
     projectsModel.get(id)
