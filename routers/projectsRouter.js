@@ -41,7 +41,21 @@ project.delete('/:id', projectIdValidator, (req, res) => {
     })
 })
 
-project.put(':/id')
+project.put('/:id', [projectIdValidator, projectBodyValidator], (req, res) => {
+    projectsModel.update(req.valProject.id, req.valProjectBody)
+    .then(flag => {
+        if(flag) {
+            res.status(200).json({
+                error: false,
+                id: req.valProject.id, 
+                ...req.valProjectBody})
+        } else res.status(200).json({error: true, message: 'Failed to delete'})
+    })
+    .catch(err => res.status(500).json({
+        error: true,
+        message: err.message
+    }))
+})
 
 function projectIdValidator(req, res, next) {
     const { id } = req.params;
