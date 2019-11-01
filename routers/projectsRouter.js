@@ -35,4 +35,18 @@ function projectIdValidator(req, res, next) {
     }))
 }
 
+function projectBodyValidator(req, res, next) {
+    const { name, description, completed } = req.body;
+    if(!Object.keys(req.body).length){
+        res.status(400).json("Request body missing")
+    } else if (!name || !description || !completed) 
+        res.status(400).json("Please pass in name, description and a completed status for project")
+    else if (typeof(completed) !== 'boolean'){
+        res.status(400).json("is `completed` a boolean, you tool?")
+    } else {
+        req.valProject = {name, description, completed}
+        next()
+    }
+}
+
 module.exports = project;
