@@ -107,7 +107,7 @@ function projectBodyValidator(req, res, next) {
   const { name, description, completed } = req.body;
   if (!Object.keys(req.body).length) {
     res.status(400).json("Request body missing");
-  } else if (!name || !description || !completed)
+  } else if (!name || !description || completed === undefined)
     res
       .status(400)
       .json(
