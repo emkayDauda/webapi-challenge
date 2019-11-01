@@ -54,6 +54,19 @@ actionRouter.delete('/:id', actionIdValidator, (req, res) => {
       );
 })
 
+actionRouter.put('/:id', [actionIdValidator, actionBodyValidator, projectIdValidator], (req, res) => {
+    actionsDbHelper.update(req.valAction.id, req.valActionBody)
+    .then(flag => {
+        if(flag) {
+            res.status(201).json({
+                error: false,
+                message: "Updated successfully",
+                data: {...req.valActionBody, id: req.valAction.id}
+            })
+        }
+    })
+})
+
 function actionIdValidator(req, res, next) {
     const { id } = req.params;
     actionsDbHelper
@@ -96,7 +109,7 @@ function actionBodyValidator(req, res, next) {
 }
 
 function projectIdValidator(req, res, next) {
-  const id = req.params.id || req.body.project_id;
+  const id =  req.body.project_id;
   projectsDbHelper
     .get(id)
     .then(project => {
