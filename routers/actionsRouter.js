@@ -39,6 +39,21 @@ actionRouter.post('/', [projectIdValidator, actionBodyValidator], (req, res) => 
       );
 })
 
+actionRouter.delete('/:id', actionIdValidator, (req, res) => {
+    actionsDbHelper.remove(req.valAction.id)
+    .then(flag => {
+        if (flag) {
+            res.status(201).json({error: false, message: "Deleted", data: req.valAction})
+        } else res.status(200).json({error: true, mesage: "Failed to delete"})
+    })
+    .catch(err =>
+        res.status(500).json({
+          error: true,
+          message: err.message
+        })
+      );
+})
+
 function actionIdValidator(req, res, next) {
     const { id } = req.params;
     actionsDbHelper
