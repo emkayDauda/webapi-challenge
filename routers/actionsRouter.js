@@ -17,6 +17,28 @@ actionRouter.get("/", (req, res) => {
     );
 });
 
+function actionIdValidator(req, res, next) {
+    const { id } = req.params;
+    actionsDbHelper
+      .get(id)
+      .then(action => {
+        if (action) {
+          req.valAction = action;
+          next();
+        } else
+          res.status(404).json({
+            err: true,
+            message: "Action with that ID not found"
+          });
+      })
+      .catch(err =>
+        res.status(500).json({
+          error: err.message,
+          message: "An error occurred while fetching from database"
+        })
+      );
+}
+
 function projectIdValidator(req, res, next) {
   const { id } = req.params;
   projectsDbHelper
