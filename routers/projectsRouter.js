@@ -18,7 +18,7 @@ project.get('/:id', projectIdValidator, (req, res) => {
 })
 
 project.post('/', projectBodyValidator, (req, res) => {
-    projectsModel.insert(req.valProject)
+    projectsModel.insert(req.valProjectBody)
     .then(insertedProject => {
         res.status(200).json(insertedProject)
     })
@@ -40,6 +40,8 @@ project.delete('/:id', projectIdValidator, (req, res) => {
         }
     })
 })
+
+project.put(':/id')
 
 function projectIdValidator(req, res, next) {
     const { id } = req.params;
@@ -68,7 +70,7 @@ function projectBodyValidator(req, res, next) {
     else if (typeof(completed) !== 'boolean'){
         res.status(400).json("is `completed` a boolean, you tool?")
     } else {
-        req.valProject = {name, description, completed}
+        req.valProjectBody = {name, description, completed}
         next()
     }
 }
