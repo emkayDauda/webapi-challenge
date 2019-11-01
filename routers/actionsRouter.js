@@ -17,6 +17,10 @@ actionRouter.get("/", (req, res) => {
     );
 });
 
+actionRouter.get('/:id', actionIdValidator, (req, res) => {
+    res.status(201).json(req.valAction)
+})
+
 function actionIdValidator(req, res, next) {
     const { id } = req.params;
     actionsDbHelper
