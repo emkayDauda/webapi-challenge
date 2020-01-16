@@ -28,11 +28,19 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Describe Middleware?
 
+Middleware refers to functions that have access to the request and response functions in the request-respoonse lifecycle. They usually have a third parameter - next, which is the next callback to run once the middleware has completed execution.
+
 - [ ] Describe a Resource?
+
+Resource refers to anything that may be transferred from a server to the client. The REST paradigm has programmers thinking of all objects residing in the database as a resource.
 
 - [ ] What can the API return to help clients know if a request was successful?
 
+A response code of 2xx (i.e. a response status of `OK`)
+
 - [ ] How can we partition our application into sub-applications?
+
+This is done with routing. All parts of the application that are dealing with a common resource may be groupe together in a separate route.
 
 ## Project Setup
 
